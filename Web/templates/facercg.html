@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Faces人脸识别</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/ico.ico') }}" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/facercg.css') }}">
+    <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
+    <style type="text/css">
+        #result {
+            width: 520px;
+            height: 450px;
+            float: left;
+            margin-left: 50px;
+            margin-top: 30px;
+        }
+
+        #result img {
+            width: 380px;
+            height: 400px;
+            margin-left: 50px;
+            padding-top: 30px;
+        }
+
+        input {
+            text-align: center;
+            margin: 0 auto;
+            margin-top: -50px;
+            padding-left: 150px;
+            background-color: #FFF;
+        }
+
+        .box {
+            width: 520px;
+            height: 450px;
+            margin: 100px auto;
+            float: right;
+            margin-right: 100px;
+        }
+
+        .box .tab a {
+            display: block;
+            float: left;
+            width: 248.5px;
+            background: #fff;
+            color: #3A3939;
+            text-align: center;
+            height: 50px;
+            line-height: 50px;
+            border: 1px solid #78C3F3;
+        }
+
+        .box .tab a:nth-child(2) {
+            border-left: 0px solid;
+        }
+
+        .box .tab a.active {
+            background: #AADFFD;
+            color: #004974;
+        }
+
+        .box .con {
+            width: 500px;
+            clear: both;
+            height: 500px;
+        }
+
+        .box .con .list {
+            line-height: 550px;
+            text-align: center;
+            font-size: 50px;
+            opacity: 0;
+            height: 0px;
+            overflow: hidden;
+        }
+
+        .box .con .list.show {
+            opacity: 1;
+            height: 550px;
+            border: 1px solid #78C3F3;
+            line-height: 550px;
+            text-align: center;
+            font-size: 50px;
+            overflow: hidden;
+            border-top: 0px solid;
+        }
+
+        text.highcharts-credits {
+            display: none;
+        }
+
+    </style>
+    <script src="{{ url_for('static', filename='js/jquery-1.10.1.min.js') }}"></script>
+    <script>
+        $(function () {
+            $(".box .list").first().css("display", "block");
+            $(".box .tab a").click(function () {
+                $(".box .tab a").removeClass("active");
+                $(this).addClass("active");
+
+                $(".box").find(".list").removeClass("show");
+                $(".box").find(".list").eq($(this).index()).addClass("show");
+            });
+
+            $(".showbox").click(function () {
+                $(this).toggleClass("hi");
+                $(".menu").toggle();
+            })
+
+        })
+    </script>
+
+
+</head>
+
+<body>
+<header>
+    <div class="mainbox">
+        <ul>
+            <li><a href="{{ url_for('index') }}">首页</a></li>
+            <li><a href="{{ url_for('facelib') }}">人像图库</a></li>
+            <li><a href="{{ url_for('facercg') }}">人脸识别</a></li>
+            <li><a href="{{ url_for('about') }}">关于我们</a></li>
+        </ul>
+    </div>
+</header>
+
+
+{% if message %}
+    <script>
+        alert("{{ message }}");
+    </script>
+{% endif %}
+
+
+<div class="mainbox">
+    <h3>人脸识别</h3>
+    <p style="font-size: 16px">即刻体验基于深度学习的人脸识别功能，请上传本地图片，程序会根据已知人像库识别您上传的人像。</p>
+</div>
+
+<div class="mainbox">
+    <div class="upload">
+        <div id="result" class="re">
+            {% if left_photo_path %}
+                <img src="{{ left_photo_path }} " style="width: auto;height: auto;max-width: 100%;max-height: 100%;">
+            {% else %}
+                <img src="../static/images/loading.gif"
+                     style="width: 133px;height: 133px;padding-left: 0;padding-top:200px;">
+            {% endif %}
+        </div>
+        <form method="post" action="/facercg" enctype="multipart/form-data">
+            <a href=" " style="width: 64px;font-size: 16px">选择图片<input id="pic" type="file" name="file" value="上传"
+                                                                       accept="" onchange="selectFile()"/></a>
+            <a href=" " style="width: 64px;font-size: 16px">上传图片<input type="submit" id="delivery" value="上传"
+                                                                       style="margin-left: 295px;padding-left: 25px;padding-right: 27px;padding-top: 7px;padding-bottom: 7px"/></a>
+        </form>
+
+        <div class="select">
+            <span>预测结果：</span><span>{{ result }}</span><br/>
+            <span>相似度：</span><i>{{ similarity }}</i>
+        </div>
+    </div>
+
+    <div class="box">
+        <div class="tab">
+            <a href="javascript:" class="active" style="font-size: 18px">人脸识别结果</a>
+            <a href="javascript:" style="font-size: 18px">表情识别结果</a>
+        </div>
+        <div class="con">
+            <div class="list show">
+                {% if unknown_show %}
+                    <img src="{{ url_for('static', filename='images/unknown.jpg') }}" class="unknown">
+                {% endif %}
+
+                {% if image_paths %}
+                    {% for image_path in image_paths %}
+                        <img src="../{{ image_path }}" alt="" title="{{ result }}" class="picture">
+                    {% endfor %}
+                {% elif not unknown_show %}
+                    <img src="{{ url_for('static', filename='images/unknown.jpg') }}" class="unknown">
+                {% endif %}
+
+            </div>
+            <div class="list">
+                <img src="{{ url_for('static', filename='images/unknown.jpg') }}" class="unknown"
+                     style="margin-left:45px;display: none;">
+                <div id="container"
+                     style="width:300px;height:300px;margin-left:-50px;margin-top: 90px;display: inline-block;"></div>
+                <script src="{{ url_for('static', filename='js/highcharts.js') }}"></script>
+
+                <script>
+                    Highcharts.chart('container', {
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            type: 'pie'
+                        },
+                        title: {
+                            text: ''
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                    style: {
+                                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                    }
+                                }
+                            }
+                        },
+                        series: [{
+                            name: '占比',
+                            colorByPoint: true,
+                            data:
+                                {% if expression_data %}
+                                    {{ expression_data|tojson }}
+                                {% else %}
+                                    [{name: '生气', y: 3.61},
+                                        {name: '沮丧', y: 3.41, sliced: true, selected: true},
+                                        {name: '恐惧', y: 3.67},
+                                        {name: '开心', y: 3.18},
+                                        {name: '平淡', y: 3.64},
+                                        {name: '伤心', y: 3.6},
+                                        {name: '震惊', y: 3.2}
+                                    ]
+                                {% endif %}
+                        }]
+                    });
+                </script>
+                <img src="../{{ emoji_path }}" alt="" class="emotion"
+                     style="height: 120px;width: 120px;margin-top: -270px;">
+                <span style="font-size: 20px;color:#3A3939;margin-top:-502px;display: block;float: left;margin-left: 162px;">识别结果：</span>
+                <span style="font-size: 24px;color:#3A3939;margin-top:-504px;display: block;margin-right: 170px;">{{ expression_result }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<footer></footer>
+</body>
+</html>

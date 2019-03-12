@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Faces人脸识别</title>
+<link rel="shortcut icon" href="{{ url_for('static', filename='images/ico.ico') }}" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+
+<body>
+   <header>
+	 <div class="mainbox">
+	   <div class="bg" ></div>
+		<ul>
+		  <li><a href="{{ url_for('index') }}">首页</a></li>
+		  <li><a href="{{ url_for('facelib') }}">人像图库</a></li>
+		  <li><a href="{{ url_for('facercg') }}">人脸识别</a></li>
+		  <li><a href="{{ url_for('about') }}">关于我们</a></li>
+		</ul>
+
+		<div class="banner">
+		   <img class="logo" src="{{ url_for('static', filename='images/human.png') }}" alt="">
+		   <img class="name" src="{{ url_for('static', filename='images/title.png') }}" alt="">
+		   <a href="{{ url_for('facercg') }}">立即体验</a>
+		</div>
+	 </div>
+  </header>
+</body>
+</html>

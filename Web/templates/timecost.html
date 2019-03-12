@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API调用时间统计</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/ico.ico') }}" type="image/x-icon" />
+</head>
+<body>
+    <div id="container" style="max-width:1200px;height:650px"></div>
+    <style>
+        #container{margin: 0 auto;}
+    </style>
+    <script src="../static/js/highcharts.js"></script>
+
+    <script>
+        // 图表配置
+        var options = {
+            title: {
+                text: 'API调用时间统计',
+                style: {
+				    fontSize: '24px'
+			    }
+            },
+            xAxis: {
+                categories: {{ filenames|tojson }},
+                style: {
+                    fontSize: '18px'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: '调用时间/s',
+                    style: {
+                        fontSize: '18px',
+                        fontWeight: 'bold'
+                    }
+                }
+            },
+            series: {{ timecost|tojson }}
+        };
+        // 图表初始化函数
+        var chart = Highcharts.chart('container', options);
+    </script>
+</body>
+</html>

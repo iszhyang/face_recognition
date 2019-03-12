@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Faces人脸识别</title>
+<link rel="shortcut icon" href="{{ url_for('static', filename='images/ico.ico') }}" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/about.css') }}">
+</head>
+
+<body>
+  <header>
+  <div class="mainbox">
+		<ul>
+		  <li><a href="{{ url_for('index') }}">首页</a></li>
+		  <li><a href="{{ url_for('facelib') }}">人像图库</a></li>
+		  <li><a href="{{ url_for('facercg') }}">人脸识别</a></li>
+		  <li><a href="{{ url_for('about') }}">关于我们</a></li>
+		</ul>
+  </div>
+  </header>
+  <div class="mainbox">
+    <div class="member">
+    <img src="{{ url_for('static', filename='images/photo1.jpg') }}" alt="">
+    <h3>不那么张扬的张扬</h3>
+    <p>来自福大计算机专业的大三摩羯男，在组内负责图像及数据的处理、人脸识别算法设计、网站后端搭建。初次参赛，多多关照！</p>
+    </div>
+
+    <div class="member2">
+    <img src="{{ url_for('static', filename='images/photo2.jpg') }}" alt="">
+    <h3>抱着世石熊写代码的李炜栋</h3>
+    <p>来自福大应用心理专业，大三，努力成为懂开发的产品狗中。在组内负责网页设计和前端开发。</p>
+    </div>
+   </div>
+</body>
+</html>

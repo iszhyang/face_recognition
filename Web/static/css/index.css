@@ -1,0 +1,71 @@
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,ul,li,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,section, article, aside, header, footer, nav, dialog, figure,menu,hgroup,iframe ,input{ margin:0; padding:0; border:0; }
+body{ font-family:"Tahoma","Regular", "微软雅黑"; line-height:24px;font-size:12px;width: 100%;height: 100%;}
+em,i,{font-style: normal;}
+a{text-decoration:none; outline:none; color: #FFF;}
+input:focus,textarea:focus{ outline:none; }
+ul,li{ list-style:none;}
+
+.mainbox{ width:1200px; margin:0 auto;}
+.fl{ float:left;}
+.fr{ float:right;} 
+	
+@keyframes move1
+	{
+	0%{ transform:scale(1.1); opacity:0;}
+	25%{ transform:scale(0.8); opacity:1;}
+	50%{ transform:scale(1.1); opacity:0.75;}
+	75%{ transform:scale(0.9); opacity:0.75;}
+	100%{ transform:scale(1); opacity:1;}
+	 
+}
+
+@-webkit-keyframes move1
+	{
+	0%{ transform:scale(0.8); opacity:1;}
+    100%{ transform:scale(1.0); opacity:1;} 
+}
+	
+
+header .bg { background: url("../images/banner.jpg"); position: absolute; left: 0; top: 0; height: 150%;width:200%;
+-webkit-animation: bg 50s linear infinite; -moz-animation: bg 50s linear infinite; -o-animation: bg linear infinite; animation: bg 50s linear infinite; }
+ @-webkit-keyframes bg {  0% {
+ left: 0%
+}
+ 100% {
+ left: -100%
+}
+}
+@-moz-keyframes bg {  0% {
+ left: 0
+}
+ 100% {
+ left: -100%
+}
+}
+@keyframes bg {  0% {
+ left: 0
+}
+ 100% {
+ left: -100%
+}
+}
+
+header img{margin-top: 20px;float: left;}
+header ul{float: right;margin-top: 34px;margin-right: 100px;}
+header li{float: left;margin-left: 52px;}
+header li a{font-size: 14px;position: relative;}
+header li:nth-child(1) a{color: #FF5C73;}
+header li:nth-child(1) a::before {color: #FF5C73;}
+header li a:hover{color: #FF5C73;}
+header li a {-webkit-transition: color 0.3s;-moz-transition: color 0.3s;transition: color 0.3s;}
+header li a::before {position: absolute;top: 100%;left: 50%;color: transparent;content: '•';text-shadow: 0 0 transparent;
+-webkit-transition: text-shadow 0.3s, color 0.3s;-moz-transition: text-shadow 0.3s, color 0.3s;
+transition: text-shadow 0.3s, color 0.3s;-webkit-transform: translateX(-50%);-moz-transform: translateX(-50%);transform: translateX(-50%);}
+header li a:hover::before{color: #ff5c73;}
+	
+.banner .name{position:relative;top:70px;left:-470px;z-index:1;}
+.banner .logo{position:relative;top:90px;left:550px;z-index:5; -webkit-animation:2s move1 ease-out; animation:2s move1  ease-out; width: 600px;height: 400px;}	
+.banner a{color: #fff;font-size: 18px;opacity: 0.7;display: inline-block;width: 170px;height: 54px; border: 1px solid #FFF;  text-align: center;padding-top: 17px; box-sizing: border-box; transition:0.7s;position: relative;top:160px;right: 70px;}
+.banner a:hover{opacity:1;background: #FFF;color:#042074;-webkit-transform:scale(0.8);}
+
+
